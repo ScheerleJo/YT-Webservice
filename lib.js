@@ -32,10 +32,7 @@ let running = false;   //Variable to check if a stream is currently on air
 //const stream is a Object containing all main Methods for each action
     //Create a new Stream
 function createStream(){
-        if(running == true){
-            console.log("Zur Zeit läuft ein Stream. Dieser muss erst beendet werden bevor ein neuer Stream geplant werden kann.");
-            return;
-        }
+        checkStatus('create')
         console.log('create');
         //Call necessary functions to schedule a livestream for Sundays at 9:45
 
@@ -43,10 +40,7 @@ function createStream(){
     }
     //Start the Stream
 function startStream(){
-        if(running == true){
-            console.log("Es läuft bereits ein Stream. Beende diesen um den nächsten zu starten");
-            return;
-        }
+        checkStatus('start')
         console.log('start');
         //Call necessary functions to start the next upcoming livestream
 
@@ -56,10 +50,7 @@ function startStream(){
     }
     //End the Stream
 function endStream(){
-        if(running == false){
-            console.log("Zur Zeit läuft kein Stream, der beendet werden kann");
-            return;
-        }
+        checkStatus('end')
         console.log('end');
         //Call necessary functions to end the current livestream
 
@@ -67,7 +58,21 @@ function endStream(){
         running = false;
         return
     }
-
+function checkStatus(action){
+    if(running == true){
+        switch(action){
+            case 'create': addon = 'um einen neuen Stream zu planen';
+                break;
+            case 'start':  addon = 'um den nächsten Stream zu starten';
+                break;
+        }
+        console.log('Es läuft bereits ein Stream. Beende diesen um den nächsten zu starten');
+    }else{
+        if(action == 'end'){
+            console.log('Zur Zeit läuft kein Stream, der beendet werden kann ' + addon);
+        }
+    }
+}
 
 //This function checks the current day and time. depending on the current date it creates the date for the next stream on Sunday morning at 9:45
 function nextSundayStream(){

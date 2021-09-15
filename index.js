@@ -5,15 +5,10 @@ const fs = require('fs');
 const url = require('url-parse');
 const {google} = require('googleapis');
 const lib = require('./lib');
-//var OAuth2 = google.auth.OAuth2;
-
-
-var readline = require('readline');
 
 //create the webserver
 const server = http.createServer(function(req, res){
-
-
+/*
     //set the debug-helper as GUI for the Localhost port
     res.writeHead(200, {'Content-Type':'text/html'})
     fs.readFile('index.html', function(error, data){
@@ -24,14 +19,13 @@ const server = http.createServer(function(req, res){
             res.write(data);
         }
         res.end();
-    })
+    })*/
     //console.log(req.url);
 
     //Parse the Querystring of the HTTP-Request into an array
-    lib.actionTriggered(url(req.url, true).query['action']);
-    
-}).listen(port, function(error){
-
+    lib.actionTriggered(url(req.url, true).query['action']);    
+})
+server.listen(port, function(error){
     if(error){
         console.log(`Etwas ist schief gelaufen ${error}`);
     }else{
