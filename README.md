@@ -14,3 +14,6 @@ This Node.js based webserver is hosted on the local machine. It simplifys the ta
 ## How it Works
 
 The Webserver gets a command through an HTTP Request, with the wanted action in the querystring of the Request.
+```
+http://localhost:8004/send/?action=...&date=...
+```
