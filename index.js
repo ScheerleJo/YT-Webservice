@@ -2,14 +2,13 @@ require('dotenv').config();
 const port = 8002;
 const http = require('http');
 const fs = require('fs');
-const url = require('url');
+const url = require('url-parse');
 const {google} = require('googleapis');
 const lib = require('./lib');
 //var OAuth2 = google.auth.OAuth2;
 
-var readline = require('readline');
 
-let running = false;   //Variable to check if a stream is currently on air
+var readline = require('readline');
 
 //create the webserver
 const server = http.createServer(function(req, res){
@@ -29,8 +28,7 @@ const server = http.createServer(function(req, res){
     //console.log(req.url);
 
     //Parse the Querystring of the HTTP-Request into an array
-    path = url.parse(req.url, true).query;
-    lib.actionTriggered(path['action']);
+    lib.actionTriggered(url(req.url, true).query['action']);
     
 }).listen(port, function(error){
 

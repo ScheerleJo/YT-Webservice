@@ -1,15 +1,23 @@
 DocumentType = module;
 
-export function actionTriggered(method){
+module.exports = {
+    actionTriggered,
+    nextSundayStream,
+    createStream,
+    startStream,
+    endStream
+}
+
+function actionTriggered(method){
     switch(method){
         case 'create': 
-            stream.create(); 
+            createStream(); 
             break;
         case 'start':
-            stream.start();
+            startStream();
             break;
         case 'stop':
-            stream.end(); 
+            endStream(); 
             break;
         case null: 
             break;
@@ -18,10 +26,12 @@ export function actionTriggered(method){
             break;
     }
 }
+
+let running = false;   //Variable to check if a stream is currently on air
+
 //const stream is a Object containing all main Methods for each action
-const stream = {
     //Create a new Stream
-    create(){
+function createStream(){
         if(running == true){
             console.log("Zur Zeit läuft ein Stream. Dieser muss erst beendet werden bevor ein neuer Stream geplant werden kann.");
             return;
@@ -29,10 +39,10 @@ const stream = {
         console.log('create');
         //Call necessary functions to schedule a livestream for Sundays at 9:45
 
-
-    },
+        return;
+    }
     //Start the Stream
-    start(){
+function startStream(){
         if(running == true){
             console.log("Es läuft bereits ein Stream. Beende diesen um den nächsten zu starten");
             return;
@@ -42,9 +52,10 @@ const stream = {
 
 
         running = true;
-    },
+        return
+    }
     //End the Stream
-    end(){
+function endStream(){
         if(running == false){
             console.log("Zur Zeit läuft kein Stream, der beendet werden kann");
             return;
@@ -54,12 +65,12 @@ const stream = {
 
        
         running = false;
+        return
     }
 
-}
 
 //This function checks the current day and time. depending on the current date it creates the date for the next stream on Sunday morning at 9:45
-export function nextSundayStream(){
+function nextSundayStream(){
     var add;
     var currentDate = new Date();
     var nextDate = new Date();
@@ -77,9 +88,4 @@ export function nextSundayStream(){
         nextDate = new Date(currentDate.getFullYear(), (currentDate.getMonth()), (currentDate.getDate() + add), 09, 45, 00);
     }
     return nextDate;
-}
-
-
-module.exports = {
-    actionTriggered,
 }
