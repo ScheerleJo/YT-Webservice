@@ -23,4 +23,4 @@ After parsing the URL, A function checks which action is triggered and then call
 
 -   [ ] Finish on top listed commands
 -   [ ] Implement Livestreaming without using OBS
--   [ ] 
+-   [ ] .
