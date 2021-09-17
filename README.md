@@ -1,9 +1,9 @@
 # YT-Webservice
-**A Node.js Webserver to simplify tasks**
+**A Node.js Webserver to simplify YT-Livetstreaming**
 
 ## About the YouTube-Webservice
 
-This Node.js based webserver is hosted on the local machine. It simplifys the tasks a technician in church by controlling the livestream. The webserver gets its commands from [Companion](https://github.com/bitfocus/companion). The aim of this project is provide a better access to the YouTube Livestreams, so they can be controlled by a streamdeck.
+This Node.js based webserver is hosted on the local machine. It simplifys the tasks a technician in church by controlling the livestream. The webserver is build to get its commands from [Companion](https://github.com/bitfocus/companion). The aim of this project is provide a better access to the YouTube Livestreams, so they can be controlled by a streamdeck.
 
 ## Implemented Commands
 
@@ -17,3 +17,10 @@ The Webserver gets a command through an HTTP Request, with the wanted action in 
 ```
 http://localhost:8004/send/?action=...&date=...
 ```
+After parsing the URL, A function checks which action is triggered and then calls the requestet function.
+
+## Future Plans for the service
+
+-   [ ] Finish on top listed commands
+-   [ ] Implement Livestreaming without using OBS
+-   [ ] 

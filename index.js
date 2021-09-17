@@ -22,7 +22,7 @@ const server = http.createServer(function(req, res){
     })*/
     //console.log(req.url);
 
-    //Parse the Querystring of the HTTP-Request into an array
+    //Parse the Querystring of the HTTP-Request into an array and send action parameter to function
     lib.actionTriggered(url(req.url, true).query['action']);    
 })
 server.listen(port, function(error){
