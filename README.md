@@ -25,7 +25,7 @@ After parsing the URL, A function checks which action is triggered and then call
 -   [ ] Finish on top listed commands
 -   [ ] Create and set Thumbnails automatically
 -   [ ] Implement Livestreaming without using OBS
--   
+
 ## Developer
 
-> <img src="https://avatars.githubusercontent.com/ScheerleJo"   height="50px" title="Josia Scheerle"/> | [`@ScheerleJo`](https://github.com/ScheerleJo)
+<img src="https://avatars.githubusercontent.com/ScheerleJo"   height="50px" title="Josia Scheerle"/> | [`@ScheerleJo`](https://github.com/ScheerleJo)
