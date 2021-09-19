@@ -21,6 +21,7 @@ After parsing the URL, A function checks which action is triggered and then call
 
 ## Future Plans for the service
 
+-   [ ] Adding a functional GUI
 -   [ ] Finish on top listed commands
 -   [ ] Create and set Thumbnails automatically
 -   [ ] Implement Livestreaming without using OBS

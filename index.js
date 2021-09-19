@@ -1,29 +1,41 @@
 require('dotenv').config();
+const express = require('express');
+const app = express();
 const port = 8002;
-const http = require('http');
-const fs = require('fs');
+const cookieParser = require('cookie-parser')
+//const http = require('http');
+//const fs = require('fs');
 const url = require('url-parse');
-const {google} = require('googleapis');
 const lib = require('./lib');
+//const oauth2 = require('./oauth');
 
+let running = false;
 //create the webserver
-const server = http.createServer(function(req, res){
-/*
-    //set the debug-helper as GUI for the Localhost port
-    res.writeHead(200, {'Content-Type':'text/html'})
-    fs.readFile('index.html', function(error, data){
-        if(error){
-            res.writeHead(404);
-            res.write('Error: File not Found');
-        } else{
-            res.write(data);
-        }
-        res.end();
-    })*/
-    //console.log(req.url);
+app.set('view engine', 'ejs');
+app.use(express.static(__dirname + '/views'));
+app.use(express.json());
+app.use(cookieParser());
 
+app.get('/*', (req, res) => {
+    res.render('index');
+})
+
+app.get('/send', (req, res) =>{
     //Parse the Querystring of the HTTP-Request into an array and send action parameter to function
-    lib.actionTriggered(url(req.url, true).query['action']);    
+    //The date parameter in the array is either the value 'now' or 'nextSunday'
+    lib.actionTriggered(url(req.url, true).query);
+})
+app.get('/auth/google', (res, req) => {
+    
+})
+app.listen(port, () => {
+    console.log(`Server running on Port ${port}`);
+})
+
+
+/*
+const server = http.createServer(function(req, res){
+
 })
 server.listen(port, function(error){
     if(error){
@@ -32,3 +44,4 @@ server.listen(port, function(error){
         console.log(`Server läuft auf Port ${port}`);
     }
 });
+*/

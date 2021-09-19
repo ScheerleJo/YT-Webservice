@@ -1,7 +1,5 @@
 DocumentType = module;
 
-
-
 module.exports = {
     actionTriggered,
     nextSundayStream,
@@ -10,16 +8,16 @@ module.exports = {
     endStream
 }
 
-function actionTriggered(action){
-    switch(action){
+function actionTriggered(param){
+    switch(param['action']){
         case 'create': 
-            createStream(action); 
+            createStream(param['action'], param['date']); 
             break;
         case 'start':
-            startStream(action);
+            startStream(param['action']);
             break;
         case 'stop':
-            endStream(action); 
+            endStream(param['action']); 
             break;
         case null: 
             break;
@@ -33,7 +31,7 @@ let running = false;   //Variable to check if a stream is currently on air
 
 //const stream is a Object containing all main Methods for each action
     //Create a new Stream
-function createStream(action){
+function createStream(action, date){
         checkStatus(action);
         console.log('create');
         //Call necessary functions to schedule a livestream for Sundays at 9:45

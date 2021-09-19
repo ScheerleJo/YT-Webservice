@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>    
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="styles.css">
+        <link rel="icon" href="Icon.png">
+        <title>YouTube Webserver</title>
+        
+    </head>
+    <body>
+        <div id="description">
+            <h1>YouTube Livestreaming Webserver</h1>
+            <p>Dieser Webserver dient zur Automatisierung für Youtube Livestreams. Dafür werden die <a href="https://developers.google.com/youtube/v3" target="_blank">
+                YouTube Data API</a> und die <a href="https://developers.google.com/youtube/v3/live/getting-started" target="_blank">
+                YouTube Livestreaming API</a> genutzt. Bedient werden sollen die Funktionen des Webserver in erster Linie mit der OpenSource Software
+                Companion in Kombination mit dem Streamdeck, kann aber über dieses Menü getestet und bedient werden.</p>
+        </div>
+        <div class="container" id="create_container">
+            <div class="containerHead">
+                <span class="containerTitle">Neuen Stream planen</span>
+                <span class="containerEvent">createStream</span> 
+            </div>
+            <div class="containerBody">
+                <div style="display: flex;">
+                    <span class="containerDesc">Titel:</span>
+                    <input type="text" class="input" id="input_title"/>
+                </div>
+                <div>
+                    <span class="containerDesc">Datum:</span>
+                    <input type="datetime-local" class="input" id="input_dateTime"/>
+                </div>
+                <button class="button" id="send_create">Neuen Stream erstellen</button>
+                <!--<form method="POST" action="http://localhost:8002/send/?action=create&date=">
+                    
+                </form>-->
+            </div>  
+            <script>
+                //Due to bullshit, Timezone Offset isn't possible without some serious hacking
+                document.querySelector('#input_dateTime').value = new Date().toISOString().split('.')[0];
+            </script>
+        </div>
+        <div class="container" id="start_container">
+            <div class="containerHead">
+                <span class="containerTitle">Stream starten</span>
+                <span class="containerEvent">startStart</span> 
+            </div>
+            <div class="containerBody">
+                <div style="display: flex;">
+                    <span class="containerDesc">Stream:</span>
+                    <input type="text" class="input" id="input_nextStream"/>
+                </div>
+                <form method="POST" action="http://localhost:8002/send/?action=start">
+                    <button class="button" id="send_start">Stream starten</button>
+                </form>
+
+                <button class="button" id="steam_link">Link öffnen</button>
+            </div>
+        </div>
+        <div class="container" id="end_container">
+            <div class="containerHead">
+                <span class="containerTitle">Stream beenden</span>
+                <span class="containerEvent">endStream</span> 
+            </div>
+            <div class="containerBody">
+                <div style="display: flex;">
+                    <span class="containerDesc">aktuell:</span>
+                    <input type="text" class="input" id="input_currentStream" readonly/>
+                </div>
+                <form method="POST" action="http://localhost:8002/send/?action=stop">
+                    <button class="button" id="send_end">Stream beenden</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
