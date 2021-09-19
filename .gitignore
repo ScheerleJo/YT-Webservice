@@ -1,5 +1,3 @@
 client_secret.json
 node_modules
 workspace.code-workspace
-oauth.js
-request.json
