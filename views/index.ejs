@@ -24,18 +24,25 @@
             <div class="containerBody">
                 <div style="display: flex;">
                     <span class="containerDesc">Titel:</span>
-                    <input type="text" class="input" id="input_title"/>
+                    <input type="text" name ="input_title" class="input" id="input_title"/>
                 </div>
                 <div>
                     <span class="containerDesc">Datum:</span>
-                    <input type="datetime-local" class="input" id="input_dateTime"/>
+                    <input type="datetime-local" class="input" id="input_dateTime" value="<?php echo date('Y-m-d\TH:i:sP', $row['Time']); ?>"/>
                 </div>
                 <button class="button" id="send_create">Neuen Stream erstellen</button>
+                <script>
+                    //Due to bullshit, Timezone Offset isn't possible without some serious hacking
+                    document.querySelector('#input_dateTime').value = new Date().toISOString().split('.')[0];
+                    
+                    document.querySelector('#send_create').addEventListener('click', function(){
+                        var title = document.querySelector('#input_title').value;
+                        var date = document.querySelector('#input_dateTime').value;
+                        alert('next stream: \ntitle: ' + title + '\ndate: ' + date);
+                    })
+                </script>
             </div>  
-            <script>
-                //Due to bullshit, Timezone Offset isn't possible without some serious hacking
-                document.querySelector('#input_dateTime').value = new Date().toISOString().split('.')[0];
-            </script>
+
         </div>
         <div class="container" id="start_container">
             <div class="containerHead">
@@ -47,11 +54,17 @@
                     <span class="containerDesc">Stream:</span>
                     <input type="text" class="input" id="input_nextStream"/>
                 </div>
-                <form method="POST" action="http://localhost:8002/send/?action=start">
-                    <button class="button" id="send_start">Stream starten</button>
-                </form>
-
-                <button class="button" id="steam_link">Link öffnen</button>
+                <button class="button" id="send_start">Stream starten</button>
+                <button class="button" id="stream_link">Link öffnen</button>
+                <script>
+                    document.querySelector('#send_start').addEventListener('click', function(){
+                        var titleStart = document.querySelector('#input_nextStream').value;
+                        alert('onStart was triggered: ' + titleStart);
+                    })
+                    document.querySelector('#stream_link').addEventListener('click', function(){
+                        alert('onLink was triggered');
+                    })
+                </script>
             </div>
         </div>
         <div class="container" id="end_container">
@@ -64,9 +77,12 @@
                     <span class="containerDesc">aktuell:</span>
                     <input type="text" class="input" id="input_currentStream" readonly/>
                 </div>
-                <form method="POST" action="http://localhost:8002/send/?action=stop">
-                    <button class="button" id="send_end">Stream beenden</button>
-                </form>
+                 <button class="button" id="send_end">Stream beenden</button>
+                 <script>
+                     document.querySelector('#send_end').addEventListener('click', function(){
+                        alert('onEnd was triggered');
+                     })
+                 </script>
             </div>
         </div>
     </body>
