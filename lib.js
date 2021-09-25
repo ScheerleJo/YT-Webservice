@@ -11,13 +11,13 @@ module.exports = {
 function actionTriggered(param){
     switch(param['action']){
         case 'create': 
-            createStream(param['action'], param['date']); 
+            createStream(param['date']); 
             break;
         case 'start':
-            startStream(param['action']);
+            startStream();
             break;
         case 'stop':
-            endStream(param['action']); 
+            endStream(); 
             break;
         case null: 
             break;
@@ -31,38 +31,37 @@ let running = false;   //Variable to check if a stream is currently on air
 let streamDate = '';
 
 //Create a new Stream
-function createStream(action, date){
-        checkStatus(action);
-        console.log('create');
-        //Call necessary functions to schedule a livestream for Sundays at 9:45
-        switch (date){
-            case 'now': streamDate = new Date(); break;
-            case 'sunday': streamDate = nextSundayStream(); break;
-            default: streamDate = date; break;
-        }
+function createStream(date){
+    checkStatus('create');
+    console.log('create');
+    //Call necessary functions to schedule a livestream for Sundays at 9:45
+    switch (date){
+        case 'now': streamDate = new Date(); break;
+        case 'sunday': streamDate = nextSundayStream(); break;
+        default: streamDate = date; break;
+    }
         
 
-        return;
+    return;
 }
 //Start the Stream
-function startStream(action){
-        checkStatus(action);
-        console.log('start');
-        //Call necessary functions to start the next upcoming livestream
-        running = true;
+function startStream(){
+    checkStatus('start');
+    console.log('start');
+    //Call necessary functions to start the next upcoming livestream
+    running = true;
 
         
-        return
+    return
 }
 //End the Stream
-function endStream(action){
-        checkStatus(action);
-        console.log('end');
-        //Call necessary functions to end the current livestream
-
+function endStream(){
+    checkStatus('stop');
+    console.log('end');
+    //Call necessary functions to end the current livestream
        
-        running = false;
-        return
+    running = false;
+    return
 }
 
 function checkStatus(action){
@@ -73,10 +72,10 @@ function checkStatus(action){
             case 'start':  addon = 'um den nächsten Stream zu starten';
                 break;
         }
-        console.log('Es läuft bereits ein Stream. Beende diesen um den nächsten zu starten');
+        console.log(`Es läuft bereits ein Stream. Beende diesen ${addon}!`);
     }else{
         if(action == 'end'){
-            console.log('Zur Zeit läuft kein Stream, der beendet werden kann ' + addon);
+            console.log('Zur Zeit läuft kein Stream, der beendet werden kann!');
         }
     }
 }
@@ -100,4 +99,29 @@ function nextSundayStream(){
         nextDate = new Date(currentDate.getFullYear(), (currentDate.getMonth()), (currentDate.getDate() + add), 09, 45, 00);
     }
     return nextDate;
+}
+
+function sundayName(value){
+    const nameArray ={
+        1: '1. Advent',
+        2: '2. Advent',
+        3: '3. Advent',
+        4: '4. Advent',
+        5: 'Heiligabend',
+        6: 'Weihnachten',
+        7: '1. Sonntag nach Weihnachten',
+        8: 'Altjahrabend',
+        9: 'Neujahr',
+        10: '2. Sonntag nach Weihnachten',
+        11: 'Epiphanias',
+        12: '1. Sonntag nach Epiphanias',
+        13: '2. Sonntag nach Epiphanias',
+        14: '3. Sonntag nach Epiphanias',
+        15: '4. Sonntag nach Epiphanias',
+        16: 'Sexagesimä',
+        17: 'Estomihi',
+        18: 'Aschermittwoch',
+        19: 'Invocavit',
+        20: 'Reminiszere'
+    }
 }

@@ -21,7 +21,7 @@ app.get('/*', (req, res) => {
 })
 app.get('/send', (req, res) =>{
     //Parse the Querystring of the HTTP-Request into an array and send action parameter to function
-    //The date parameter in the array is either the value 'now' or 'nextSunday'
+    //The date parameter in the array is either the value 'now', 'nextSunday' or a TimeString
     lib.actionTriggered(url(req.url, true).query);
 })
 app.get('/auth/google', (res, req) => {
