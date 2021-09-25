@@ -22,7 +22,10 @@ After parsing the URL, A function checks which action is triggered and then call
 ## Future Plans for the service
 
 -   [ ] Adding a functional GUI
--   [ ] Finish on top listed commands
+-   [ ] Understand Googles OAuth2.0
+-   [ ] Implement Google OAuth2.0 with Refresh-Tokens
+-   [ ] Research exact api functionality
+-   [ ] Start with startStream
 -   [ ] Create and set Thumbnails automatically
 -   [ ] Implement Livestreaming without using OBS
 
