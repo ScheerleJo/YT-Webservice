@@ -28,18 +28,23 @@ function actionTriggered(param){
 }
 
 let running = false;   //Variable to check if a stream is currently on air
+let streamDate = '';
 
-//const stream is a Object containing all main Methods for each action
-    //Create a new Stream
+//Create a new Stream
 function createStream(action, date){
         checkStatus(action);
         console.log('create');
         //Call necessary functions to schedule a livestream for Sundays at 9:45
-
+        switch (date){
+            case 'now': streamDate = new Date(); break;
+            case 'sunday': streamDate = nextSundayStream(); break;
+            default: streamDate = date; break;
+        }
+        
 
         return;
-    }
-    //Start the Stream
+}
+//Start the Stream
 function startStream(action){
         checkStatus(action);
         console.log('start');
@@ -48,8 +53,8 @@ function startStream(action){
 
         
         return
-    }
-    //End the Stream
+}
+//End the Stream
 function endStream(action){
         checkStatus(action);
         console.log('end');
@@ -58,7 +63,8 @@ function endStream(action){
        
         running = false;
         return
-    }
+}
+
 function checkStatus(action){
     if(running == true){
         switch(action){

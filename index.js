@@ -19,7 +19,6 @@ app.use(cookieParser());
 app.get('/*', (req, res) => {
     res.render('index');
 })
-
 app.get('/send', (req, res) =>{
     //Parse the Querystring of the HTTP-Request into an array and send action parameter to function
     //The date parameter in the array is either the value 'now' or 'nextSunday'
@@ -28,20 +27,7 @@ app.get('/send', (req, res) =>{
 app.get('/auth/google', (res, req) => {
     
 })
+
 app.listen(port, () => {
     console.log(`Server running on Port ${port}`);
 })
-
-
-/*
-const server = http.createServer(function(req, res){
-
-})
-server.listen(port, function(error){
-    if(error){
-        console.log(`Etwas ist schief gelaufen ${error}`);
-    }else{
-        console.log(`Server läuft auf Port ${port}`);
-    }
-});
-*/

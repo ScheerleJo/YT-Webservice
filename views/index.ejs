@@ -14,7 +14,7 @@
             <p>Dieser Webserver dient zur Automatisierung für Youtube Livestreams. Dafür werden die <a href="https://developers.google.com/youtube/v3" target="_blank">
                 YouTube Data API</a> und die <a href="https://developers.google.com/youtube/v3/live/getting-started" target="_blank">
                 YouTube Livestreaming API</a> genutzt. Bedient werden sollen die Funktionen des Webserver in erster Linie mit der OpenSource Software
-                Companion in Kombination mit dem Streamdeck, kann aber über dieses Menü getestet und bedient werden.</p>
+                <a href="https://bitfocus.io/companion/" target="_blank">Companion</a> in Kombination mit dem Streamdeck, kann aber über dieses Menü getestet und bedient werden.</p>
         </div>
         <div class="container" id="create_container">
             <div class="containerHead">
@@ -28,7 +28,7 @@
                 </div>
                 <div>
                     <span class="containerDesc">Datum:</span>
-                    <input type="datetime-local" class="input" id="input_dateTime" value="<?php echo date('Y-m-d\TH:i:sP', $row['Time']); ?>"/>
+                    <input type="datetime-local" class="input" id="input_dateTime" value=""/>
                 </div>
                 <button class="button" id="send_create">Neuen Stream erstellen</button>
                 <script>
@@ -38,6 +38,14 @@
                     document.querySelector('#send_create').addEventListener('click', function(){
                         var title = document.querySelector('#input_title').value;
                         var date = document.querySelector('#input_dateTime').value;
+                        var data = {
+                            'title': title,
+                            'date': date
+                        };
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("POST","localhost:8002/add",true);
+                        xhr.setRequestHeader("Content-Type","application/json");
+                        xhr.send(data);
                         alert('next stream: \ntitle: ' + title + '\ndate: ' + date);
                     })
                 </script>
