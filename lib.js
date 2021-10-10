@@ -7,11 +7,13 @@ module.exports = {
     startStream,
     endStream
 }
-
-function actionTriggered(param){
-    switch(param['action']){
+/**
+ * @param {Array} queryString requested action and date
+ */
+function actionTriggered(queryString){
+    switch(queryString['action']){
         case 'create': 
-            createStream(param['date']); 
+            createStream(queryString['date']); 
             break;
         case 'start':
             startStream();
@@ -27,14 +29,14 @@ function actionTriggered(param){
     }
 }
 
-let running = false;   //Variable to check if a stream is currently on air
+let running = false;
 let streamDate = '';
 
 //Create a new Stream
 function createStream(date){
     checkStatus('create');
     console.log('create');
-    //Call necessary functions to schedule a livestream for Sundays at 9:45
+    //Call necessary functions to schedule a livestream
     switch (date){
         case 'now': streamDate = new Date(); break;
         case 'sunday': streamDate = nextSundayStream(); break;
@@ -63,7 +65,11 @@ function endStream(){
     running = false;
     return
 }
-
+/**
+ * @param  {string} action Check if a stream is currently running
+ * !Doesn't check stream Status from the YouTube API at the Moment
+ * TODO: Implement checking trough the API
+ */
 function checkStatus(action){
     if(running == true){
         switch(action){
@@ -80,7 +86,9 @@ function checkStatus(action){
     }
 }
 
-//This function checks the current day and time. depending on the current date it creates the date for the next stream on Sunday morning at 9:45
+/**
+ * Generate a DateString for upcoming sunday at 09:45
+ */
 function nextSundayStream(){
     var add;
     var currentDate = new Date();
@@ -100,7 +108,9 @@ function nextSundayStream(){
     }
     return nextDate;
 }
-
+/**
+ * @param  {number} value List of all possible Names for Sundays
+ */
 function sundayName(value){
     const nameArray ={
         1: '1. Advent',
