@@ -5,6 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="styles.css">
+        <link rel="icon" href="/Icon.png">
         <title>YouTube Webserver</title>
         
     </head>
@@ -30,68 +31,64 @@
                     <span class="containerDesc">Datum:</span>
                     <input type="datetime-local" class="input" id="input_dateTime" value=""/>
                 </div>
-                <button class="button" id="send_create">Neuen Stream erstellen</button>
-                <script>
-                    //Due to bullshit, Timezone Offset isn't possible without some serious hacking
-                    document.querySelector('#input_dateTime').value = new Date().toISOString().split('.')[0];
-                    
-                    document.querySelector('#send_create').addEventListener('click', function(){
-                        var title = document.querySelector('#input_title').value;
-                        var date = document.querySelector('#input_dateTime').value;
-                        var data = {
-                            'title': title,
-                            'date': date
-                        };
-                        var xhr = new XMLHttpRequest();
-                        xhr.open("POST","localhost:8002/add",true);
-                        xhr.setRequestHeader("Content-Type","application/json");
-                        xhr.send(data);
-                        alert('next stream: \ntitle: ' + title + '\ndate: ' + date);
-                    })
-                </script>
-            </div>  
-
+                <button class="button" id="send_create" onclick="handleAction('createStream')">Neuen Stream erstellen</button>
+            </div>
         </div>
         <div class="container" id="start_container">
             <div class="containerHead">
                 <span class="containerTitle">Stream starten</span>
-                <span class="containerEvent">startStart</span> 
+                <span class="containerEvent">startStream</span> 
             </div>
             <div class="containerBody">
                 <div style="display: flex;">
                     <span class="containerDesc">Stream:</span>
                     <input type="text" class="input" id="input_nextStream"/>
                 </div>
-                <button class="button" id="send_start">Stream starten</button>
-                <button class="button" id="stream_link">Link öffnen</button>
-                <script>
-                    document.querySelector('#send_start').addEventListener('click', function(){
-                        var titleStart = document.querySelector('#input_nextStream').value;
-                        alert('onStart was triggered: ' + titleStart);
-                    })
-                    document.querySelector('#stream_link').addEventListener('click', function(){
-                        alert('onLink was triggered');
-                    })
-                </script>
+                <button class="button" id="send_start" onclick="handleAction('startStream')">Stream starten</button>
+                <button class="button" id="stream_link" onclick="handleAction('linkStream')">Link öffnen</button>
             </div>
         </div>
         <div class="container" id="end_container">
             <div class="containerHead">
                 <span class="containerTitle">Stream beenden</span>
-                <span class="containerEvent">endStream</span> 
+                <span class="containerEvent">stopStream</span> 
             </div>
             <div class="containerBody">
                 <div style="display: flex;">
                     <span class="containerDesc">aktuell:</span>
                     <input type="text" class="input" id="input_currentStream" readonly/>
                 </div>
-                 <button class="button" id="send_end">Stream beenden</button>
-                 <script>
-                     document.querySelector('#send_end').addEventListener('click', function(){
-                        alert('onEnd was triggered');
-                     })
-                 </script>
+                 <button class="button" id="send_end" onclick="handleAction('stopStream')">Stream beenden</button>
             </div>
         </div>
+        <script>
+            //Due to bullshit, Timezone Offset isn't possible without some serious hacking
+            document.querySelector('#input_dateTime').value = new Date().toISOString().split('.')[0];
+
+            function handleAction(action){
+                switch(action){
+                    case 'createStream': 
+                        var title = document.querySelector('#input_title').value;
+                        var date = document.querySelector('#input_dateTime').value;
+                        var data = { title, date };
+                        alert('next stream: \ntitle: ' + title + '\ndate: ' + date);
+                        break;
+                    case 'startStream': 
+                        var titleStart = document.querySelector('#input_nextStream').value;
+                        alert('onStart was triggered: ' + titleStart);
+                        break;
+                    case 'linkStream': 
+                        alert('onLink was triggered');
+                        break;
+                    case 'stopStream': 
+                        alert('onEnd was triggered');
+                        break;
+                }
+                let url = `http://localhost:8002/send?action=${action}`;
+                fetch(url).then(response =>response.text()).then(jsondata => {
+                    console.log(jsondata);
+                });
+            }
+        </script>
     </body>
 </html>

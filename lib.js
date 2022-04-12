@@ -1,3 +1,6 @@
+const url_parse = require('url-parse');
+const path = require('path');
+
 DocumentType = module;
 
 module.exports = {
@@ -5,34 +8,34 @@ module.exports = {
     nextSundayStream,
     createStream,
     startStream,
-    endStream
+    endStream,
+    returnPath
 }
 /**
- * @param {Array} queryString requested action and date
+ * @param {object} url requested action and date
  */
-function actionTriggered(queryString){
-    switch(queryString['action']){
-        case 'create': 
-            createStream(queryString['date']); 
+function actionTriggered(url){
+    switch(url_parse(url, true).query.action){
+        case 'createStream':
+            createStream(url_parse(url, true).query.date);
             break;
-        case 'start':
+        case 'startStream':
             startStream();
             break;
-        case 'stop':
-            endStream(); 
+        case 'linkStream':
             break;
-        case null: 
+        case 'stopStream':
+            endStream();
             break;
-        default:
-            console.log('Diese Funktion existiert nicht. Wenn du denkst, dass sie das sollte, sag Josia Scheerle bescheid!')
+        case null:
             break;
+        default: console.log('Diese Funktion existiert nicht. Wenn du denkst, dass sie das sollte, sag Josia Scheerle bescheid!'); break;
     }
 }
 
 let running = false;
 let streamDate = '';
 
-//Create a new Stream
 function createStream(date){
     checkStatus('create');
     console.log('create');
@@ -42,29 +45,22 @@ function createStream(date){
         case 'sunday': streamDate = nextSundayStream(); break;
         default: streamDate = date; break;
     }
-        
-
-    return;
 }
-//Start the Stream
+
 function startStream(){
     checkStatus('start');
     console.log('start');
     //Call necessary functions to start the next upcoming livestream
     running = true;
-
-        
-    return
 }
-//End the Stream
+
 function endStream(){
     checkStatus('stop');
     console.log('end');
     //Call necessary functions to end the current livestream
-       
     running = false;
-    return
 }
+
 /**
  * @param  {string} action Check if a stream is currently running
  * !Doesn't check stream Status from the YouTube API at the Moment
@@ -80,12 +76,13 @@ function checkStatus(action){
         }
         console.log(`Es läuft bereits ein Stream. Beende diesen ${addon}!`);
     }else{
-        if(action == 'end'){
-            console.log('Zur Zeit läuft kein Stream, der beendet werden kann!');
-        }
+        if(action == 'end'){ console.log('Zur Zeit läuft kein Stream, der beendet werden kann!'); }
     }
 }
 
+function returnPath(){
+    return path.join(__dirname + '/views/index.html');
+}
 /**
  * Generate a DateString for upcoming sunday at 09:45
  */
